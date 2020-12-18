@@ -1,0 +1,226 @@
+{
+  "breweries": [
+    {
+      "id": 1,
+      "name": "Avondale Brewing Co",
+      "brewery_type": "micro",
+      "city": "Birmingham",
+      "state": "Alabama",
+      "country": "United States",
+      "website_url": "http://www.avondalebrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Band of Brothers Brewing Company",
+      "brewery_type": "micro",
+      "city": "Tuscaloosa",
+      "state": "Alabama",
+      "country": "United States",
+      "website_url": "http://www.bandofbrosbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Trim Tab Brewing",
+      "brewery_type": "micro",
+      "city": "Birmingham",
+      "state": "Alabama",
+      "country": "United States",
+      "website_url": "http://www.trimtabbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Yellowhammer Brewery",
+      "brewery_type": "micro",
+      "city": "Huntsville",
+      "state": "Alabama",
+      "postal_code": "35805-3046",
+      "country": "United States",
+      "website_url": "http://www.yellowhammerbrewery.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Bearpaw River Brewing Co",
+      "brewery_type": "micro",
+      "city": "Wasilla",
+      "state": "Alaska",
+      "country": "United States",
+      "website_url": "http://bearpawriverbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 6,
+      "name": "King Street Brewing Co",
+      "brewery_type": "micro",
+      "city": "Anchorage",
+      "state": "Alaska",
+      "country": "United States",
+      "website_url": "http://www.kingstreetbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 7,
+      "name": "1912 Brewing",
+      "brewery_type": "micro",
+      "city": "Tucson",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.1912brewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Bad Water Brewing",
+      "brewery_type": "contract",
+      "city": "Scottsdale",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.badwaterbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 9,
+      "name": "BJs Restaurant \u0026 Brewery - Chandler",
+      "brewery_type": "brewpub",
+      "city": "Chandler",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.bjsrestaurants.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 10,
+      "name": "BlackRock Brewers",
+      "brewery_type": "micro",
+      "city": "Tucson",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.brb.beer",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Dragoon Brewing Co",
+      "brewery_type": "micro",
+      "city": "Tucson",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.dragoonbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Grand Canyon Brewing Company",
+      "brewery_type": "micro",
+      "city": "Williams",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.grandcanyonbrewingco.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Mudshark Brewing Co",
+      "brewery_type": "micro",
+      "city": "Lake Havasu City",
+      "state": "Arizona",
+      "postal_code": "86403-0966",
+      "website_url": "http://www.mudsharkbrewingco.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Richter Aleworks",
+      "brewery_type": "micro",
+      "city": "Peoria",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.richteraleworks.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 15,
+      "name": "SanTan Brewing Co",
+      "brewery_type": "regional",
+      "city": "Chandler",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.santanbrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 16,
+      "name": "State 48 Brewery",
+      "brewery_type": "brewpub",
+      "city": "Surprise",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Wren House Brewing Company",
+      "brewery_type": "micro",
+      "city": "Phoenix",
+      "state": "Arizona",
+      "country": "United States",
+      "website_url": "http://www.wrenhousebrewing.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Brick Oven Pizza Co / Brick \u0026 Forge Brewing",
+      "brewery_type": "brewpub",
+      "city": "Paragould",
+      "state": "Arkansas",
+      "country": "United States",
+      "website_url": "http://www.brickovenpizzacompany.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Diamond Bear Brewing Co",
+      "brewery_type": "micro",
+      "city": "North Little Rock",
+      "state": "Arkansas",
+      "country": "United States",
+      "website_url": "http://www.diamondbear.com",
+      "tag_list": [
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Lost Forty Brewing",
+      "brewery_type": "micro",
+      "city": "Little Rock",
+      "state": "Arkansas",
+      "country": "United States",
+      "website_url": "http://www.lost40brewing.com/",
+      "tag_list": [
+      ]
+    }
+  ]
+}
+
