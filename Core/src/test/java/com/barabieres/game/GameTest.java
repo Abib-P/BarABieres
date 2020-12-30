@@ -9,6 +9,19 @@ class GameTest {
     Game game = new Game(2000);
 
     @Test
+    public void should_get_tresorery() {
+
+        assertEquals(game.getTresorery(), 2000);
+    }
+
+    @Test
+    public void should_set_tresorery() {
+        game.setTresorery(1000);
+
+        assertEquals(game.getTresorery(), 1000);
+    }
+
+    @Test
     public void should_increase_tresorery() {
         game.increaseTresorery(10);
 
