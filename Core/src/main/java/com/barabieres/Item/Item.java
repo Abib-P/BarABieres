@@ -2,7 +2,7 @@ package com.barabieres.Item;
 
 public class Item {
     private final String name;
-    private final double value;
+    private double value;
 
     public Item(String name, double value) {
         this.name = name;

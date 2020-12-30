@@ -28,7 +28,7 @@ class GameTest {
 
         assertEquals(game.getTresorery(), 2010);
     }
-  
+
     @Test
     public void should_decrease_tresorery() {
         game.decreaseTresorery(10);
@@ -59,3 +59,4 @@ class GameTest {
     public void should_get_win_at() {
         assertEquals(game.getWinAt(), 300);
     }
+}
