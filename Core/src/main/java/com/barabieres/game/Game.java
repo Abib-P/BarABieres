@@ -4,9 +4,11 @@ public class Game {
 
     private double tresorery;
     private int score;
+    private int winAt;
 
-    public Game(double tresorery) {
+    public Game(double tresorery, int winAt) {
         this.tresorery = tresorery;
+        this.winAt = winAt;
         this.score = 0;
     }
 
@@ -32,7 +34,16 @@ public class Game {
         return score;
     }
 
+    //augmente le score du nombre de points passés en paramètres
+    public void inscreaseScore(int nbPointsAdd) {
+        this.setScore(this.getScore() + nbPointsAdd);
+    }
+
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getWinAt() {
+        return this.winAt;
     }
 }
