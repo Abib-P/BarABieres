@@ -1,7 +1,7 @@
 package com.barabieres.user;
 
 public class User {
-
+  
     private final String name;
 
     public User(String name) {
