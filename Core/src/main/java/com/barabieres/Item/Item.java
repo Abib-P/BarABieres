@@ -1,8 +1,8 @@
 package com.barabieres.Item;
 
 public class Item {
-    private String name;
-    private double value;
+    private final String name;
+    private final double value;
 
     public Item(String name,double value) {
         this.name = name;
