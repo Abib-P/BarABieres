@@ -1,10 +1,9 @@
 package com.barabieres.inventory;
+
 import com.barabieres.Item.Item;
 import com.barabieres.cashflow.CashFlow;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class Inventory {
 
@@ -15,6 +14,7 @@ public class Inventory {
         this.items = new ArrayList<>();
         this.cashFlow = new CashFlow(100.00,1000.00);
     }
+
     public Inventory(List<Item> items) {
         this.items = items;
     }
