@@ -12,6 +12,7 @@ public class Inventory {
     public Inventory() {
         this.items = new ArrayList<>();
     }
+
     public Inventory(List<Item> items) {
         this.items = items;
     }
@@ -20,4 +21,7 @@ public class Inventory {
         this.items.add(item);
     }
 
+    public List<Item> getItems() {
+        return this.items;
+    }
 }
