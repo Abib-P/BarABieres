@@ -6,6 +6,7 @@ public class Game {
     private int score;
     private final int winAt;
     private final int gameOverAt;
+    private double gainOfTheDay;
     private int turn;
 
     public Game(double tresorery, int winAt, int gameOverAt) {
@@ -14,6 +15,7 @@ public class Game {
         this.score = 0;
         this.gameOverAt = gameOverAt;
         this.turn = 0;
+        this.gainOfTheDay = 0;
     }
 
     public double getTresorery() {
@@ -66,5 +68,31 @@ public class Game {
 
     public void nextTurn() {
         this.setTurn(this.getTurn() + 1);
+    }
+
+    public double getGainOfTheDay() {
+        return this.gainOfTheDay;
+    }
+
+    public void setGainOfTheDay(double gainOfTheDay) {
+        this.gainOfTheDay = gainOfTheDay;
+    }
+
+    /**
+     * augmente le gain du jour avec le gain passé en paramètre
+     *
+     * @param gain
+     */
+    public void increaseGainOfTheDay(double gain) {
+        this.setGainOfTheDay(this.getGainOfTheDay() + gain);
+    }
+
+    /**
+     * met le gain du jour (de la veille car lancé en début de tour suivant) dans la trésorerie et repasse
+     * les gains du jour à 0
+     */
+    public void putGainOfTheDayOnTresorery() {
+        this.tresorery += gainOfTheDay;
+        this.gainOfTheDay = 0;
     }
 }
