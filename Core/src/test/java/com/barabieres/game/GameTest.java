@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GameTest {
 
 
-    Game game = new Game(2000, 300);
+    Game game = new Game(2000, 300, 25);
 
     @Test
     public void should_get_tresorery() {
