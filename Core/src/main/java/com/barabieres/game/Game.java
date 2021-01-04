@@ -43,10 +43,8 @@ public class Game {
     /**
      * Score max 10 000
      * A chaque tour qui passe le score perd son score max divisé par son nombre de tour max (décroissance proportionnelle)
-     *
-     * @param score
      */
-    public void setScore(int score) {
+    public void setScore() {
         this.score = 10000 - (10000 / gameOverAt) * turn;
     }
 
@@ -62,12 +60,8 @@ public class Game {
         return turn;
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
     public void nextTurn() {
-        this.setTurn(this.getTurn() + 1);
+        this.turn += 1;
     }
 
     public double getGainOfTheDay() {
