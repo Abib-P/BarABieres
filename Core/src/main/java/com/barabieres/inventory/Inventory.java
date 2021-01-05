@@ -8,15 +8,15 @@ import java.util.List;
 public class Inventory {
 
     private CashFlow cashFlow;
-    private List<Item> items;
+    private List<Stock> stocks;
 
     public Inventory() {
-        this.items = new ArrayList<>();
+        this.stocks = new ArrayList<>();
         this.cashFlow = new CashFlow(100.00,1000.00);
     }
 
-    public Inventory(List<Item> items) {
-        this.items = items;
+    public Inventory(List<Stock> stocks) {
+        this.stocks = stocks;
     }
 
     public CashFlow getCashFlow() {
@@ -28,15 +28,15 @@ public class Inventory {
     }
 
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItems(List<Stock> stocks) {
+        this.stocks = stocks;
     }
 
-    public void addItem(Item item) {
-        this.items.add(item);
+    public void addItem(Stock stock) {
+        this.stocks.add(stock);
     }
 
-    public List<Item> getItems() {
-        return this.items;
+    public List<Stock> getItems() {
+        return this.stocks;
     }
 }
