@@ -1,24 +1,24 @@
 package com.barabieres.inventory;
 
-import com.barabieres.Item.Item;
+import com.barabieres.Item.Beer;
 
 public class Stock {
 
-    private Item item;
+    private final Beer beer;
     private int quantity;
 
-    public Stock(Item item) {
-        this.item = item;
+    public Stock(Beer beer) {
+        this.beer = beer;
         this.quantity = 0;
     }
 
-    public Stock(Item item, int quantity) {
-        this.item = item;
+    public Stock(Beer beer, int quantity) {
+        this.beer = beer;
         this.quantity = quantity;
     }
 
-    public Item getItem() {
-        return item;
+    public Beer getBeer() {
+        return beer;
     }
 
     public int getQuantity() {
@@ -32,5 +32,10 @@ public class Stock {
     //augmente la quantité du nombre passé en paramètre
     public void increaseQuantity(int quantity) {
         this.setQuantity(this.quantity + quantity);
+    }
+
+    //diminue la quantité du nombre passé en paramètre
+    public void decreaseQuantity(int quantity) {
+        this.setQuantity(this.quantity - quantity);
     }
 }
