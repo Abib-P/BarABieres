@@ -1,7 +1,5 @@
 package com.barabieres.game;
 
-import com.barabieres.Item.Beer;
-import com.barabieres.inventory.Stock;
 import com.barabieres.user.User;
 
 public class Game {

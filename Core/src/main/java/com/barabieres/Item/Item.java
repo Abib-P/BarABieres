@@ -1,6 +1,7 @@
 package com.barabieres.Item;
 
 public class Item {
+
     private final String name;
     private double value;
 

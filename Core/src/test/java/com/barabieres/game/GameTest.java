@@ -1,14 +1,19 @@
 package com.barabieres.game;
 
 import com.barabieres.user.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+    Game game;
 
-    Game game = new Game(2000, 300, 25, new User("Théo", 100));
+    @BeforeEach
+    void setup() {
+        game = new Game(2000, 300, 25, new User("Théo", 100));
+    }
 
     @Test
     public void should_get_tresorery() {

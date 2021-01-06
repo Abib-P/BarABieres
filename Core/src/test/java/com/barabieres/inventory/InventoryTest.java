@@ -1,17 +1,22 @@
 package com.barabieres.inventory;
+
 import com.barabieres.Item.Beer;
-import com.barabieres.cashflow.CashFlow;
-import com.barabieres.user.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class InventoryTest {
 
-    Inventory inventory = new Inventory(100);
-    Stock stock = new Stock(new Beer("Blonde", 7, 5));
+    Inventory inventory;
+    Stock stock;
+
+    @BeforeEach
+    void setup() {
+        inventory = new Inventory(100);
+        stock = new Stock(new Beer("Blonde", 7, 5));
+    }
 
     @Test
     void should_create_inventory_with_empty_list_items_and_set_cashFlow() {
