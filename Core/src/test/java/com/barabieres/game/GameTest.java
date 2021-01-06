@@ -1,13 +1,14 @@
 package com.barabieres.game;
 
+import com.barabieres.user.User;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
 
-    Game game = new Game(2000, 300, 25);
+    Game game = new Game(2000, 300, 25, new User("Théo", 100));
 
     @Test
     public void should_get_tresorery() {
@@ -91,5 +92,35 @@ class GameTest {
         game.putGainOfTheDayOnTresorery();
 
         assertEquals(game.getTresorery(), 1150.26);
+    }
+
+    @Test
+    public void should_get_user() {
+        assertEquals("Théo", game.getUser().getName());
+    }
+
+    @Test
+    public void should_success_buy_beer() {
+        game.getUser().getInventory().increaseStock(0, 20);
+        assertTrue(game.buyBeer(0, 10));
+    }
+
+    @Test
+    public void should_success_buy_beer_but_not_all_quantity() {
+        game.getUser().getInventory().increaseStock(0, 90);
+        assertTrue(game.buyBeer(0, 20));
+    }
+
+    @Test
+    public void should_not_success_buy_beer_because_dont_have_space() {
+        game.getUser().getInventory().increaseStock(0, 100);
+        assertFalse(game.buyBeer(0, 10));
+    }
+
+    @Test
+    public void should_not_success_buy_beer_because_dont_have_tresorery() {
+        game.getUser().getInventory().increaseStock(0, 10);
+        game.getUser().getInventory().getCashFlow().decreaseCashFlow(2000);
+        assertFalse(game.buyBeer(0, 10));
     }
 }

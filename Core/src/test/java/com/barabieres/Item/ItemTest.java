@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ItemTest {
 
-    Beer beer = new Beer("Bière blonde", 5.5);
+    Beer beer = new Beer("Bière blonde", 5.5, 4.5);
 
     @Test
     void should_create_item_with_name_and_value() {
@@ -30,5 +30,10 @@ public class ItemTest {
         beer.setSellingPrice(7);
 
         assertEquals(beer.getSellingPrice(), 7);
+    }
+
+    @Test
+    void should_get_alcohol_by_volume() {
+        assertEquals(beer.getAlcoholByVolume(), 4.5);
     }
 }
