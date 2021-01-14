@@ -12,34 +12,7 @@ class GameTest {
 
     @BeforeEach
     void setup() {
-        game = new Game(2000, 300, 25, new User("Théo", 100));
-    }
-
-    @Test
-    public void should_get_tresorery() {
-
-        assertEquals(game.getTresorery(), 2000);
-    }
-
-    @Test
-    public void should_set_tresorery() {
-        game.setTresorery(1000);
-
-        assertEquals(game.getTresorery(), 1000);
-    }
-
-    @Test
-    public void should_increase_tresorery() {
-        game.increaseTresorery(10);
-
-        assertEquals(game.getTresorery(), 2010);
-    }
-
-    @Test
-    public void should_decrease_tresorery() {
-        game.decreaseTresorery(10);
-
-        assertEquals(game.getTresorery(), 1990);
+        game = new Game(300, 25, new User("Théo", 100));
     }
 
     @Test
@@ -88,15 +61,6 @@ class GameTest {
         game.increaseGainOfTheDay(150.26);
 
         assertEquals(game.getGainOfTheDay(), 150.26);
-    }
-
-    @Test
-    public void should_increase_gain_of_the_day() {
-        game.increaseGainOfTheDay(150.26);
-        game.decreaseTresorery(1000);
-        game.putGainOfTheDayOnTresorery();
-
-        assertEquals(game.getTresorery(), 1150.26);
     }
 
     @Test

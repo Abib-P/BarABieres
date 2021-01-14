@@ -86,7 +86,7 @@ class ConsoleOutputTest {
 
     @Test
     public void should_display_buyable_beers_menu() {
-        Game game = new Game(2000, 300, 25, new User("Théo", 100));
+        Game game = new Game(300, 25, new User("Théo", 100));
         ArrayList<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
         stocks.add(new Stock(new Beer("Blonde", 5, 4)));
@@ -106,6 +106,34 @@ class ConsoleOutputTest {
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
         consoleOutput.buyablesBeersMenu(game.getUser().getInventory());
+        // Do the actual assertion.
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void should_display_stock_of_beers_menu() {
+        Game game = new Game(300, 25, new User("Théo", 100));
+        game.getUser().getInventory().getCashFlow().decreaseCashFlow(10000);
+        game.getUser().getInventory().getCashFlow().increaseCashFlow(2000);
+        ArrayList<Stock> stocks = new ArrayList<>();
+        stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
+        stocks.add(new Stock(new Beer("Blonde", 5, 4)));
+        stocks.add(new Stock(new Beer("Brune", 6, 4.5)));
+        game.getUser().getInventory().setStocks(stocks);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        String expectedOutput = """
+                Tresorery : 2000.0
+                \r
+                Fruits rouges : 0\r
+                Blonde : 0\r
+                Brune : 0\r
+                """;
+
+        ConsoleOutput consoleOutput = new ConsoleOutput();
+        consoleOutput.stockOfBeersMenu(game.getUser().getInventory());
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }

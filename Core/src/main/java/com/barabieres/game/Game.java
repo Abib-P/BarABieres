@@ -4,7 +4,6 @@ import com.barabieres.user.User;
 
 public class Game {
 
-    private double tresorery;
     private int score;
     private final int winAt;
     private final int gameOverAt;
@@ -12,32 +11,13 @@ public class Game {
     private int turn;
     private User user;
 
-    public Game(double tresorery, int winAt, int gameOverAt, User user) {
-        this.tresorery = tresorery;
+    public Game(int winAt, int gameOverAt, User user) {
         this.winAt = winAt;
         this.score = 0;
         this.gameOverAt = gameOverAt;
         this.turn = 0;
         this.gainOfTheDay = 0;
         this.user = user;
-    }
-
-    public double getTresorery() {
-        return tresorery;
-    }
-
-    //augmente la trésorerie du nombre rentré en paramètre
-    public void increaseTresorery(double nbAdd) {
-        this.setTresorery(this.getTresorery() + nbAdd);
-    }
-
-    //diminue la trésorerie du nombre rentré en paramètre
-    public void decreaseTresorery(double nbDel) {
-        this.setTresorery(this.getTresorery() - nbDel);
-    }
-
-    public void setTresorery(double tresorery) {
-        this.tresorery = tresorery;
     }
 
     public int getScore() {
@@ -90,7 +70,7 @@ public class Game {
      * les gains du jour à 0
      */
     public void putGainOfTheDayOnTresorery() {
-        this.tresorery += gainOfTheDay;
+        this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + gainOfTheDay);
         this.gainOfTheDay = 0;
     }
 

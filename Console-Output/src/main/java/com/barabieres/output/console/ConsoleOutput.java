@@ -54,4 +54,17 @@ public class ConsoleOutput implements Output {
         }
         System.out.println(i + ": Not to buy anything");
     }
+
+    /**
+     * @param inventory
+     */
+    public void stockOfBeersMenu(Inventory inventory) {
+        // Affiche le début
+        String tresorery = "Tresorery : " + inventory.getCashFlow().getValue() + "\n";
+        System.out.println(tresorery);
+        // Affiche la liste des bières possibles
+        for(Stock stock : inventory.getStocks()) {
+            System.out.println(stock.getBeer().getName() + " : " + stock.getQuantity());
+        }
+    }
 }
