@@ -26,16 +26,6 @@ public class Game {
         return tresorery;
     }
 
-    //augmente la trésorerie du nombre rentré en paramètre
-    public void increaseTresorery(double nbAdd) {
-        this.setTresorery(this.getTresorery() + nbAdd);
-    }
-
-    //diminue la trésorerie du nombre rentré en paramètre
-    public void decreaseTresorery(double nbDel) {
-        this.setTresorery(this.getTresorery() - nbDel);
-    }
-
     public void setTresorery(double tresorery) {
         this.tresorery = tresorery;
     }
@@ -76,6 +66,30 @@ public class Game {
         this.gainOfTheDay = gainOfTheDay;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * augmente la trésorerie du nombre rentré en paramètre
+     * @param nbAdd
+     */
+    public void increaseTresorery(double nbAdd) {
+        this.setTresorery(this.getTresorery() + nbAdd);
+    }
+
+    /**
+     * diminue la trésorerie du nombre rentré en paramètre
+     * @param nbDel
+     */
+    public void decreaseTresorery(double nbDel) {
+        this.setTresorery(this.getTresorery() - nbDel);
+    }
+
     /**
      * augmente le gain du jour avec le gain passé en paramètre
      *
@@ -92,14 +106,6 @@ public class Game {
     public void putGainOfTheDayOnTresorery() {
         this.tresorery += gainOfTheDay;
         this.gainOfTheDay = 0;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     /**
@@ -170,15 +176,34 @@ public class Game {
         return couldSellAtLeast1;
     }
 
+    /**
+     * vérifie qu'il reste assez de place dans l'inventaire pour la quantité passée en paramètre
+     *
+     * @param quantity
+     * @return
+     */
     public boolean stillHaveEnoughtSpaceInTheInventory(int quantity) {
         return this.user.getInventory().getNumberOfPlacesInTheInventory() - quantity >= 0;
     }
 
+    /**
+     * vérifie qu'il reste assez de trésorerie pour acheter la quantité passée en paramètre
+     * de la bière passée en paramètre
+     *
+     * @param indexOfBeer
+     * @param quantity
+     * @return
+     */
     public boolean stillHaveEnoughtCashflowInTheInventory(int indexOfBeer, int quantity) {
         return this.user.getInventory().getCashFlow().getValue() - quantity * this.getUser().
                 getInventory().getStocks().get(indexOfBeer).getBeer().getSellingPrice() >= 0;
     }
 
+    /**
+     * vérifie que l'inventaire n'est pas plein
+     *
+     * @return
+     */
     public boolean stillHaveSpaceInTheInventory() {
         return this.user.getInventory().getNumberOfPlacesInTheInventory() > 0;
     }
@@ -194,14 +219,34 @@ public class Game {
                 getInventory().getStocks().get(indexOfBeer).getBeer().getSellingPrice() > 0;
     }
 
+    /**
+     * vérifie qu'il reste assez de stock pour la bière passée en paramètre pour la quantité souhaitée
+     *
+     * @param indexOfBeer
+     * @param quantity
+     * @return
+     */
     public boolean stillHaveEnoughtStockForThisBeer(int indexOfBeer, int quantity) {
         return user.getInventory().getStockOf(indexOfBeer) - quantity >= 0;
     }
 
+    /**
+     * vérifie que le stock de la bière passée en paramètre n'est pas vide
+     *
+     * @param indexOfBeer
+     * @return
+     */
     public boolean stillHaveStockForThisBeer(int indexOfBeer) {
         return user.getInventory().getStockOf(indexOfBeer) > 0;
     }
 
+    /**
+     * retourne la quantité maximale achetable de la bière passée en paramètre selon la quantité souhaitée
+     *
+     * @param indexOfBeer
+     * @param quantity
+     * @return
+     */
     public int getMaxQuantityBuyable(int indexOfBeer, int quantity) {
         int maxQuantityBuyable = 0;
         double tresorery = this.user.getInventory().getCashFlow().getValue();
@@ -214,5 +259,31 @@ public class Game {
             nbPlaces -= 1;
         }
         return maxQuantityBuyable;
+    }
+
+    /**
+     * vérifie si la partie est gagnée
+     *
+     * @return
+     */
+    public boolean isWinned() {
+        boolean isWinned = true;
+        if(this.tresorery < this.winAt) {
+            isWinned = false;
+        }
+        return isWinned;
+    }
+
+    /**
+     * vérifie si la partie est perdue à cause du nombre de tours joués
+     *
+     * @return
+     */
+    public boolean isGameOver() {
+        boolean isGameOver = true;
+        if(this.turn < this.gameOverAt) {
+            isGameOver = false;
+        }
+        return isGameOver;
     }
 }
