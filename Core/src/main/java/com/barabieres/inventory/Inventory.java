@@ -29,6 +29,8 @@ public class Inventory {
     public ArrayList<Stock> setStocks() {
         ArrayList<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
+        stocks.add(new Stock(new Beer("Blonde", 5, 4)));
+        stocks.add(new Stock(new Beer("Brune", 6, 4.5)));
         return stocks;
     }
 
