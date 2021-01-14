@@ -1,11 +1,11 @@
 package com.barabieres.Item;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ItemTest {
 
@@ -46,7 +46,7 @@ public class ItemTest {
     @Test
     void should_generate_selling_price() {
         beer.generateSellingPrice();
-        Assertions.assertTrue(beer.getSellingPrice() >= 5.5);
-        Assertions.assertTrue(beer.getSellingPrice() <= beer.getSellingPrice() * 1.2);
+        assertTrue(beer.getSellingPrice() >= 5.5);
+        assertTrue(beer.getSellingPrice() <= beer.getSellingPrice() * 1.2);
     }
 }
