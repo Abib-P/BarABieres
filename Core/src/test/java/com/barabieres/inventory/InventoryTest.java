@@ -1,6 +1,7 @@
 package com.barabieres.inventory;
 
 import com.barabieres.Item.Beer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class InventoryTest {
     @BeforeEach
     void setup() {
         inventory = new Inventory(100);
-        stock = new Stock(new Beer("Blonde", 7, 5));
+        stock = new Stock(new Beer("Fruits rouges", 7, 5));
     }
 
     @Test
@@ -70,5 +71,12 @@ class InventoryTest {
     void should_get_number_of_places_in_the_inventory() {
         inventory.increaseStock(0, 90);
         assertEquals(10, inventory.getNumberOfPlacesInTheInventory());
+    }
+
+    @Test
+    void should_modify_randomly_selling_price_of_all_beers() {
+        inventory.modifyRandomlySellingPriceOfAllBeers();
+        Assertions.assertTrue(inventory.getStocks().get(0).getBeer().getSellingPrice() >= 7);
+        Assertions.assertTrue(inventory.getStocks().get(0).getBeer().getSellingPrice() <= stock.getBeer().getSellingPrice() * 1.2);
     }
 }
