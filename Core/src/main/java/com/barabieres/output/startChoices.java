@@ -1,7 +1,7 @@
 package com.barabieres.output;
 
 public enum startChoices {
-easy_mode("Easy mode"),
+    easy_mode("Easy mode"),
     normal("Normal mode"),
     hard("Hard mode"),
     display("Display Rules");
