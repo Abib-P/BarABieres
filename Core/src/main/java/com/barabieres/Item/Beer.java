@@ -22,4 +22,12 @@ public class Beer extends Item{
     public double getAlcoholByVolume() {
         return this.alcoholByVolume;
     }
+
+    /**
+     * génère un prix de vente aléatoire entre la valeur de base de la bière et sa valeur de base + 20%
+     * @return
+     */
+    public double generateSellingPrice() {
+        return this.getValue() + (Math.random() * (this.getValue() * 0.2));
+    }
 }

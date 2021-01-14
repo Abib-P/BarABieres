@@ -106,4 +106,13 @@ public class Inventory {
         }
         return nbPlaces;
     }
+
+    /**
+     * Change le prix de vente de toutes les bières de l'inventaire
+     */
+    public void modifyRandomlySellingPriceOfAllBeers() {
+        for(Stock stock : this.stocks) {
+            stock.getBeer().setSellingPrice(stock.getBeer().generateSellingPrice());
+        }
+    }
 }
