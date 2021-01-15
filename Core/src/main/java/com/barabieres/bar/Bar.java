@@ -76,4 +76,12 @@ public class Bar {
         this.malusIsActivate = a == b;
     }
 
+    /**
+     * génère le nombre de clients du jour entre la taille du bar - 20% et la taille du bar + 20%
+     * @return
+     */
+    public int generateRandomlyNbOfClientsForTheDay() {
+        return (int) ((this.getSize() * 0.8) + Math.round(Math.random() * (this.getSize() * 0.4)));
+    }
+
 }

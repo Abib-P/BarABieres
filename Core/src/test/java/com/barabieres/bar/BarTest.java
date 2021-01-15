@@ -1,5 +1,6 @@
 package com.barabieres.bar;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class BarTest {
 
     @BeforeEach
     void setup() {
-        bar = new Bar(50);
+        bar = new Bar(100);
     }
 
     @Test
@@ -41,9 +42,15 @@ public class BarTest {
 
     @Test
     public void should_increase_size() {
-        bar.increaseSize(50);
+        bar.increaseSize(20);
 
-        assertEquals(bar.getSize(), 100);
+        assertEquals(bar.getSize(), 120);
+    }
+
+    @Test
+    void should_generate_randomly_nb_of_clients_for_the_day() {
+        Assertions.assertTrue(bar.generateRandomlyNbOfClientsForTheDay() >= 80);
+        Assertions.assertTrue(bar.generateRandomlyNbOfClientsForTheDay() <= 120);
     }
 
 }
