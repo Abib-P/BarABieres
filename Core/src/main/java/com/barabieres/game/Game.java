@@ -11,6 +11,8 @@ public class Game {
     private double gainOfTheDay;
     private int turn;
     private User user;
+    private boolean bonusIsActivate;
+    private boolean malusIsActivate;
 
     public Game(double tresorery, int winAt, int gameOverAt, User user) {
         this.tresorery = tresorery;
@@ -20,6 +22,8 @@ public class Game {
         this.turn = 0;
         this.gainOfTheDay = 0;
         this.user = user;
+        this.bonusIsActivate = false;
+        this.bonusIsActivate = false;
     }
 
     public double getTresorery() {
@@ -72,6 +76,14 @@ public class Game {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean getBonusIsActivate() {
+        return this.bonusIsActivate;
+    }
+
+    public boolean getMalusIsActivate() {
+        return this.malusIsActivate;
     }
 
     /**
@@ -285,5 +297,35 @@ public class Game {
             isGameOver = false;
         }
         return isGameOver;
+    }
+
+    /**
+     * génère deux entiers entre 0 et 100 de façon aléatoire, s'ils sont égaux,
+     * un bonus qui divise les prix de vente par deux est activé sur un tour
+     */
+    public void generateBonus() {
+        int a = (int) Math.round(Math.random() * 100);
+        int b = (int) Math.round(Math.random() * 100);
+        if(a == b) {
+            this.bonusIsActivate = true;
+        }
+        else {
+            this.bonusIsActivate = false;
+        }
+    }
+
+    /**
+     * génère deux entiers entre 0 et 100 de façon aléatoire, s'ils sont égaux,
+     * un malus qui divise les prix de vente par deux est activé sur un tour
+     */
+    public void generateMalus() {
+        int a = (int) Math.round(Math.random() * 100);
+        int b = (int) Math.round(Math.random() * 100);
+        if(a == b) {
+            this.malusIsActivate = true;
+        }
+        else {
+            this.malusIsActivate = false;
+        }
     }
 }
