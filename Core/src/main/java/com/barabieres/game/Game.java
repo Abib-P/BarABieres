@@ -56,6 +56,30 @@ public class Game {
         this.gainOfTheDay = gainOfTheDay;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * augmente la trésorerie du nombre rentré en paramètre
+     * @param nbAdd
+     */
+    public void increaseTresorery(double nbAdd) {
+        this.setTresorery(this.getTresorery() + nbAdd);
+    }
+
+    /**
+     * diminue la trésorerie du nombre rentré en paramètre
+     * @param nbDel
+     */
+    public void decreaseTresorery(double nbDel) {
+        this.setTresorery(this.getTresorery() - nbDel);
+    }
+
     /**
      * augmente le gain du jour avec le gain passé en paramètre
      *
@@ -72,14 +96,6 @@ public class Game {
     public void putGainOfTheDayOnTresorery() {
         this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + gainOfTheDay);
         this.gainOfTheDay = 0;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     /**
