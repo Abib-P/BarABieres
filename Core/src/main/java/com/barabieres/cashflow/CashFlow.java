@@ -41,5 +41,8 @@ public class CashFlow {
      */
     public void decreaseCashFlow(double quantity) {
         this.value = this.value - quantity;
+        if(this.value < 0) {
+            value = 0;
+        }
     }
 }
