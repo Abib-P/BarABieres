@@ -21,7 +21,7 @@ public class Game {
         this.gainOfTheDay = 0;
         this.user = user;
         this.bonusIsActivate = false;
-        this.bonusIsActivate = false;
+        this.malusIsActivate = false;
     }
 
     public int getScore() {
