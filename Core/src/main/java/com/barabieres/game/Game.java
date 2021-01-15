@@ -77,22 +77,6 @@ public class Game {
     }
 
     /**
-     * augmente la trésorerie du nombre rentré en paramètre
-     * @param nbAdd
-     */
-    public void increaseTresorery(double nbAdd) {
-        this.setTresorery(this.getTresorery() + nbAdd);
-    }
-
-    /**
-     * diminue la trésorerie du nombre rentré en paramètre
-     * @param nbDel
-     */
-    public void decreaseTresorery(double nbDel) {
-        this.setTresorery(this.getTresorery() - nbDel);
-    }
-
-    /**
      * augmente le gain du jour avec le gain passé en paramètre
      *
      * @param gain
@@ -296,12 +280,7 @@ public class Game {
     public void generateBonus() {
         int a = (int) Math.round(Math.random() * 100);
         int b = (int) Math.round(Math.random() * 100);
-        if(a == b) {
-            this.bonusIsActivate = true;
-        }
-        else {
-            this.bonusIsActivate = false;
-        }
+        this.bonusIsActivate = a == b;
     }
 
     /**
@@ -311,11 +290,6 @@ public class Game {
     public void generateMalus() {
         int a = (int) Math.round(Math.random() * 100);
         int b = (int) Math.round(Math.random() * 100);
-        if(a == b) {
-            this.malusIsActivate = true;
-        }
-        else {
-            this.malusIsActivate = false;
-        }
+        this.malusIsActivate = a == b;
     }
 }
