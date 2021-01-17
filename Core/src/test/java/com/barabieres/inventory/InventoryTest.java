@@ -15,14 +15,15 @@ class InventoryTest {
 
     @BeforeEach
     void setup() {
-        inventory = new Inventory(100);
+        inventory = new Inventory(Sizes.small);
         stock = new Stock(new Beer("Fruits rouges", 7, 5));
+        inventory.addStock(stock);
     }
 
     @Test
     void should_create_inventory_with_empty_list_items_and_set_cashFlow() {
 
-        Inventory inventory = new Inventory(100);
+     //   Inventory inventory = new Inventory(100);
 
         assertThat(inventory).isNotNull();
         assertThat(inventory.getCashFlow().getValue()).isNotNull();
@@ -63,20 +64,21 @@ class InventoryTest {
 
     @Test
     void should_upgrade_size_of_inventory() {
-        inventory.upgradeSizeOfInventory(20);
-        assertEquals(120, inventory.getSizeMaxOfInventory());
+        inventory.upgrade(Sizes.average);
+        assertEquals(20, inventory.getSizeMaxOfInventory());
     }
 
     @Test
     void should_get_number_of_places_in_the_inventory() {
-        inventory.increaseStock(0, 90);
-        assertEquals(10, inventory.getNumberOfPlacesInTheInventory());
+        inventory.addStock(stock);
+        assertEquals(8, inventory.getNumberOfPlacesInTheInventory());
     }
 
     @Test
     void should_modify_randomly_selling_price_of_all_beers() {
         inventory.modifyRandomlySellingPriceOfAllBeers();
         Assertions.assertTrue(inventory.getStocks().get(0).getBeer().getSellingPrice() >= 7);
-        Assertions.assertTrue(inventory.getStocks().get(0).getBeer().getSellingPrice() <= stock.getBeer().getSellingPrice() * 1.2);
+        Assertions.assertTrue(inventory.getStocks().get(0).getBeer().getSellingPrice() <=
+                stock.getBeer().getSellingPrice() * 1.2);
     }
 }

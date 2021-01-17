@@ -1,25 +1,34 @@
 package com.barabieres.bar;
 
+import com.barabieres.inventory.Sizes;
+import com.barabieres.inventory.Stock;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class Bar {
 
-    private int size;
+    private int currentSize;
+    private List<Stock> stocks;
     private boolean bonusIsActivate;
     private boolean malusIsActivate;
     private double gainOfTheDay;
 
-    public Bar(int size) {
-        this.size = size;
+    public Bar(Sizes size) {
+        this.currentSize = 0;
+        this.stocks = initStocks(size);
         this.gainOfTheDay = 0;
         this.bonusIsActivate = false;
         this.bonusIsActivate = false;
     }
 
+
     public int getSize() {
-        return this.size;
+        return this.currentSize;
     }
 
     public void setSize(int size) {
-        this.size = size;
+        this.currentSize = size;
     }
 
     public double getGainOfTheDay() {
@@ -38,14 +47,28 @@ public class Bar {
         return this.malusIsActivate;
     }
 
+    public List<Stock> initStocks(Sizes size) {
+        List<Stock> fixedStock = Arrays.asList(new Stock[size.getSize()]);
+        return fixedStock;
+    }
     /**
      * augmente la taille du bar de la taille passée en paramètre
      *
-     * @param nbAdd
+     * @param size
      */
-    public void increaseSize(int nbAdd) {
-        this.setSize(this.getSize() + nbAdd);
+    public void upgrade(Sizes size) {
+
+        int indexOfStock = 0;
+        List<Stock> upgradedStock = Arrays.asList(new Stock[size.getSize()]);
+        for (Stock stock : stocks) {
+            upgradedStock.set(indexOfStock, stock);
+            indexOfStock += 1;
+        }
+        this.stocks = upgradedStock;
     }
+
+      //  this.setSize(this.getSize() + nbAdd);
+
 
     /**
      * augmente le gain du jour avec le gain passé en paramètre
@@ -81,7 +104,10 @@ public class Bar {
      * @return
      */
     public int generateRandomlyNbOfClientsForTheDay() {
-        return (int) ((this.getSize() * 0.8) + Math.round(Math.random() * (this.getSize() * 0.4)));
+        return (int) ((this.getMaxSize() * 0.8) + Math.round(Math.random() * (this.getMaxSize() * 0.4)));
+    }
+    public int getMaxSize(){
+        return this.stocks.size();
     }
 
 }

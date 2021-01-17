@@ -1,6 +1,7 @@
 package com.barabieres.game;
 
 import com.barabieres.bar.Bar;
+import com.barabieres.inventory.Sizes;
 import com.barabieres.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class GameTest {
 
     @BeforeEach
     void setup() {
-        game = new Game(new Bar(50),300, 25, new User("Théo", 100));
+        game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
     }
 
     @Test
@@ -70,7 +71,7 @@ class GameTest {
 
     @Test
     public void should_success_buy_beer_but_not_all_quantity() {
-        game.getUser().getInventory().increaseStock(0, 90);
+        game.getUser().getInventory().increaseStock(0, 8);
         assertTrue(game.buyBeer(0, 20));
     }
 

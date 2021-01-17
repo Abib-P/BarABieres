@@ -2,19 +2,20 @@ package com.barabieres.inventory;
 
 import com.barabieres.Item.Beer;
 import com.barabieres.cashflow.CashFlow;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Inventory {
 
     private CashFlow cashFlow;
     private List<Stock> stocks;
-    private int sizeMaxOfInventory;
+    private int currentSize; // nombre de lignes de stock dans la liste de stock
 
-    public Inventory(int sizeMaxOfInventory) {
-        this.stocks = this.setStocks();
-        this.cashFlow = new CashFlow(100.00,1000.00);
-        this.sizeMaxOfInventory = sizeMaxOfInventory;
+    public Inventory(Sizes size) {
+        this.stocks = this.initStocks(size);
+        this.cashFlow = new CashFlow(100.00, 1000.00);
     }
 
     public Inventory(List<Stock> stocks) {
@@ -26,12 +27,9 @@ public class Inventory {
      *
      * @return
      */
-    public ArrayList<Stock> setStocks() {
-        ArrayList<Stock> stocks = new ArrayList<>();
-        stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
-        stocks.add(new Stock(new Beer("Blonde", 5, 4)));
-        stocks.add(new Stock(new Beer("Brune", 6, 4.5)));
-        return stocks;
+    public List<Stock> initStocks(Sizes size) {
+        List<Stock> fixedStock = Arrays.asList(new Stock[size.getSize()]);
+        return fixedStock;
     }
 
     public CashFlow getCashFlow() {
@@ -47,7 +45,10 @@ public class Inventory {
     }
 
     public void addStock(Stock stock) {
-        this.stocks.add(stock);
+        if (currentSize != stocks.size()) {
+            this.stocks.set(currentSize, stock);
+            currentSize += 1;
+        }
     }
 
     public List<Stock> getStocks() {
@@ -63,19 +64,20 @@ public class Inventory {
      */
     public void decreaseStock(int indexOfBeer, int quantity) {
         if (indexOfBeer < this.stocks.size()) {
-            this.stocks.get(indexOfBeer).setQuantity(this.stocks.get(indexOfBeer).getQuantity() - quantity);
+            this.stocks.get(indexOfBeer).decreaseQuantity(quantity);
         }
     }
 
     /**
      * augmente le stock de la bière passée en paramètre
      * on augmente la quantité passée en paramètre à la quantité actuellement en stock
+     *
      * @param indexOfBeer
      * @param quantity
      */
     public void increaseStock(int indexOfBeer, int quantity) {
         if (indexOfBeer < this.stocks.size()) {
-            this.stocks.get(indexOfBeer).setQuantity(this.stocks.get(indexOfBeer).getQuantity() + quantity);
+            this.stocks.get(indexOfBeer).increaseQuantity(quantity);
         }
     }
 
@@ -90,31 +92,34 @@ public class Inventory {
     }
 
     public int getSizeMaxOfInventory() {
-        return this.sizeMaxOfInventory;
+        return this.stocks.size();
     }
 
-    public void setSizeMaxOfInventory(int sizeMaxOfInventory) {
-        this.sizeMaxOfInventory = sizeMaxOfInventory;
-    }
-
-    public void upgradeSizeOfInventory(int sizeAdded) {
-        this.sizeMaxOfInventory = this.sizeMaxOfInventory + sizeAdded;
+    public void upgrade(Sizes size) {
+        int indexOfStock = 0;
+        List<Stock> upgradedStock = Arrays.asList(new Stock[size.getSize()]);
+        for (Stock stock : stocks) {
+            upgradedStock.set(indexOfStock, stock);
+            indexOfStock += 1;
+        }
+        this.stocks = upgradedStock;
     }
 
     public int getNumberOfPlacesInTheInventory() {
-        int nbPlaces = sizeMaxOfInventory;
-        for(Stock stock : this.stocks) {
+  /*      int nbPlaces = stocks.size();
+        for (Stock stock : this.stocks) {
             nbPlaces -= stock.getQuantity();
-        }
-        return nbPlaces;
+        }*/
+        return stocks.size()-currentSize;
     }
 
     /**
      * Change le prix de vente de toutes les bières de l'inventaire
      */
     public void modifyRandomlySellingPriceOfAllBeers() {
-        for(Stock stock : this.stocks) {
-            stock.getBeer().setSellingPrice(stock.getBeer().generateSellingPrice());
+        for (Stock stock : this.stocks) {
+            if (stock != null)
+            stock.getBeer().setRandomSellingPrice();
         }
     }
 }

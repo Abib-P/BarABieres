@@ -6,15 +6,13 @@ import com.barabieres.user.User;
 public class Game {
 
     private int score;
-    private Bar bar;
     private final int winAt;
     private final int gameOverAt;
     private int turn;
     private User user;
 
 
-    public Game(Bar bar, int winAt, int gameOverAt, User user) {
-        this.bar = bar;
+    public Game(int winAt, int gameOverAt, User user) {
         this.winAt = winAt;
         this.score = 0;
         this.gameOverAt = gameOverAt;
@@ -58,17 +56,15 @@ public class Game {
         this.user = user;
     }
 
-    public Bar getBar() {
-        return bar;
-    }
 
     /**
      * met le gain du jour (de la veille car lancé en début de tour suivant) dans la trésorerie et repasse
      * les gains du jour à 0
      */
     public void putGainOfTheDayOnTresorery() {
-        this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + this.bar.getGainOfTheDay());
-        this.bar.setGainOfTheDay(0);
+   //     this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + this.bar.getGainOfTheDay());
+      //  this.bar.setGainOfTheDay(0);
+        this.user.setGainOfTheDay();
     }
 
     /**
