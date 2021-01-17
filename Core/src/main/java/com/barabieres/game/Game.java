@@ -1,27 +1,25 @@
 package com.barabieres.game;
 
+import com.barabieres.bar.Bar;
 import com.barabieres.user.User;
 
 public class Game {
 
     private int score;
+    private Bar bar;
     private final int winAt;
     private final int gameOverAt;
-    private double gainOfTheDay;
     private int turn;
     private User user;
-    private boolean bonusIsActivate;
-    private boolean malusIsActivate;
 
-    public Game(int winAt, int gameOverAt, User user) {
+
+    public Game(Bar bar, int winAt, int gameOverAt, User user) {
+        this.bar = bar;
         this.winAt = winAt;
         this.score = 0;
         this.gameOverAt = gameOverAt;
         this.turn = 0;
-        this.gainOfTheDay = 0;
         this.user = user;
-        this.bonusIsActivate = false;
-        this.malusIsActivate = false;
     }
 
     public int getScore() {
@@ -52,14 +50,6 @@ public class Game {
         this.turn += 1;
     }
 
-    public double getGainOfTheDay() {
-        return this.gainOfTheDay;
-    }
-
-    public void setGainOfTheDay(double gainOfTheDay) {
-        this.gainOfTheDay = gainOfTheDay;
-    }
-
     public User getUser() {
         return user;
     }
@@ -68,21 +58,8 @@ public class Game {
         this.user = user;
     }
 
-    public boolean getBonusIsActivate() {
-        return this.bonusIsActivate;
-    }
-
-    public boolean getMalusIsActivate() {
-        return this.malusIsActivate;
-    }
-
-    /**
-     * augmente le gain du jour avec le gain passé en paramètre
-     *
-     * @param gain
-     */
-    public void increaseGainOfTheDay(double gain) {
-        this.setGainOfTheDay(this.getGainOfTheDay() + gain);
+    public Bar getBar() {
+        return bar;
     }
 
     /**
@@ -90,8 +67,8 @@ public class Game {
      * les gains du jour à 0
      */
     public void putGainOfTheDayOnTresorery() {
-        this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + gainOfTheDay);
-        this.gainOfTheDay = 0;
+        this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + this.bar.getGainOfTheDay());
+        this.bar.setGainOfTheDay(0);
     }
 
     /**
@@ -254,7 +231,7 @@ public class Game {
      */
     public boolean isWinned() {
         boolean isWinned = true;
-        if(this.user.getInventory().getCashFlow().getValue() < this.winAt) {
+        if (this.user.getInventory().getCashFlow().getValue() < this.winAt) {
             isWinned = false;
         }
         return isWinned;
@@ -267,29 +244,9 @@ public class Game {
      */
     public boolean isGameOver() {
         boolean isGameOver = true;
-        if(this.turn < this.gameOverAt) {
+        if (this.turn < this.gameOverAt) {
             isGameOver = false;
         }
         return isGameOver;
-    }
-
-    /**
-     * génère deux entiers entre 0 et 100 de façon aléatoire, s'ils sont égaux,
-     * un bonus qui divise les prix de vente par deux est activé sur un tour
-     */
-    public void generateBonus() {
-        int a = (int) Math.round(Math.random() * 100);
-        int b = (int) Math.round(Math.random() * 100);
-        this.bonusIsActivate = a == b;
-    }
-
-    /**
-     * génère deux entiers entre 0 et 100 de façon aléatoire, s'ils sont égaux,
-     * un malus qui divise les prix de vente par deux est activé sur un tour
-     */
-    public void generateMalus() {
-        int a = (int) Math.round(Math.random() * 100);
-        int b = (int) Math.round(Math.random() * 100);
-        this.malusIsActivate = a == b;
     }
 }

@@ -1,5 +1,6 @@
 package com.barabieres.game;
 
+import com.barabieres.bar.Bar;
 import com.barabieres.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class GameTest {
 
     @BeforeEach
     void setup() {
-        game = new Game(300, 25, new User("Théo", 100));
+        game = new Game(new Bar(50),300, 25, new User("Théo", 100));
     }
 
     @Test
@@ -54,13 +55,6 @@ class GameTest {
             game.nextTurn();
         }
         assertEquals(game.getTurn(), 15);
-    }
-
-    @Test
-    public void should_get_and_set_gain_of_the_day() {
-        game.increaseGainOfTheDay(150.26);
-
-        assertEquals(game.getGainOfTheDay(), 150.26);
     }
 
     @Test
