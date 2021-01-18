@@ -10,7 +10,8 @@ public class Game {
     private final int gameOverAt;
     private int turn;
     private User user;
-
+    private boolean bonusIsActivate;
+    private boolean malusIsActivate;
 
     public Game(int winAt, int gameOverAt, User user) {
         this.winAt = winAt;
@@ -18,6 +19,8 @@ public class Game {
         this.gameOverAt = gameOverAt;
         this.turn = 0;
         this.user = user;
+        this.bonusIsActivate = false;
+        this.malusIsActivate = false;
     }
 
     public int getScore() {
@@ -56,14 +59,21 @@ public class Game {
         this.user = user;
     }
 
+    public boolean getBonusIsActivate() {
+        return this.bonusIsActivate;
+    }
+
+    public boolean getMalusIsActivate() {
+        return this.malusIsActivate;
+    }
 
     /**
      * met le gain du jour (de la veille car lancé en début de tour suivant) dans la trésorerie et repasse
      * les gains du jour à 0
      */
     public void putGainOfTheDayOnTresorery() {
-   //     this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + this.bar.getGainOfTheDay());
-      //  this.bar.setGainOfTheDay(0);
+        //     this.user.getInventory().getCashFlow().setValue(this.user.getInventory().getCashFlow().getValue() + this.bar.getGainOfTheDay());
+        //  this.bar.setGainOfTheDay(0);
         this.user.setGainOfTheDay();
     }
 
@@ -244,5 +254,33 @@ public class Game {
             isGameOver = false;
         }
         return isGameOver;
+    }
+
+    /**
+     * génère deux entiers entre 0 et 100 de façon aléatoire, s'ils sont égaux,
+     * un bonus qui divise les prix de vente par deux est activé sur un tour
+     */
+    public void generateBonus() {
+        int a = (int) Math.round(Math.random() * 100);
+        int b = (int) Math.round(Math.random() * 100);
+        if (a == b) {
+            this.bonusIsActivate = true;
+        } else {
+            this.bonusIsActivate = false;
+        }
+    }
+
+    /**
+     * génère deux entiers entre 0 et 100 de façon aléatoire, s'ils sont égaux,
+     * un malus qui divise les prix de vente par deux est activé sur un tour
+     */
+    public void generateMalus() {
+        int a = (int) Math.round(Math.random() * 100);
+        int b = (int) Math.round(Math.random() * 100);
+        if (a == b) {
+            this.malusIsActivate = true;
+        } else {
+            this.malusIsActivate = false;
+        }
     }
 }
