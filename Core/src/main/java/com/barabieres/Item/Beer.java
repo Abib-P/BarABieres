@@ -30,4 +30,8 @@ public class Beer extends Item{
     public double generateSellingPrice() {
         return this.getValue() + (Math.random() * (this.getValue() * 0.2));
     }
+
+    public void setRandomSellingPrice(){
+        this.setSellingPrice(this.generateSellingPrice());
+    }
 }

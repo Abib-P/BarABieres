@@ -3,6 +3,7 @@ package com.barabieres.output.console;
 import com.barabieres.Item.Beer;
 import com.barabieres.game.Game;
 import com.barabieres.inventory.Inventory;
+import com.barabieres.inventory.Sizes;
 import com.barabieres.inventory.Stock;
 import com.barabieres.user.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,7 +87,7 @@ class ConsoleOutputTest {
 
     @Test
     public void should_display_buyable_beers_menu() {
-        Game game = new Game(300, 25, new User("Théo", 100));
+        Game game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
         ArrayList<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
         stocks.add(new Stock(new Beer("Blonde", 5, 4)));
@@ -112,7 +113,7 @@ class ConsoleOutputTest {
 
     @Test
     public void should_display_stock_of_beers_menu() {
-        Game game = new Game(300, 25, new User("Théo", 100));
+        Game game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
         game.getUser().getInventory().getCashFlow().decreaseCashFlow(10000);
         game.getUser().getInventory().getCashFlow().increaseCashFlow(2000);
         ArrayList<Stock> stocks = new ArrayList<>();
