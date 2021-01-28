@@ -1,20 +1,17 @@
 package com.barabieres.output.console;
 
-import com.barabieres.Item.Beer;
+import com.barabieres.bar.BarSizes;
 import com.barabieres.game.Game;
-import com.barabieres.inventory.Inventory;
-import com.barabieres.inventory.Sizes;
+import com.barabieres.inventory.InventorySizes;
 import com.barabieres.inventory.Stock;
+import com.barabieres.item.Beer;
 import com.barabieres.user.User;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConsoleOutputTest {
@@ -28,16 +25,16 @@ class ConsoleOutputTest {
 
         String expectedOutput = """
                 This is a beer selling management game.
-                 You need to have 50000 euros at 50To win the game.
-                 The faster you are, the better your final score will be\r
+                You need to have 50000.0 euros before the 50th turn to win the game.
+                The faster you are, the better your final score will be. Good luck !
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.rules(50000, 50);
+        consoleOutput.rules(50000.0, 50);
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }
-    
+
     @Test
     public void should_display_start_menu() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -56,7 +53,7 @@ class ConsoleOutputTest {
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.startMenu();
+        consoleOutput.startMenu("Théo");
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -87,7 +84,7 @@ class ConsoleOutputTest {
 
     @Test
     public void should_display_buyable_beers_menu() {
-        Game game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
+        Game game = new Game(300.0, 25, new User("Théo", InventorySizes.small, BarSizes.small));
         ArrayList<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
         stocks.add(new Stock(new Beer("Blonde", 5, 4)));
@@ -113,7 +110,7 @@ class ConsoleOutputTest {
 
     @Test
     public void should_display_stock_of_beers_menu() {
-        Game game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
+        Game game = new Game(300., 25, new User("Théo", InventorySizes.small, BarSizes.small));
         game.getUser().getInventory().getCashFlow().decreaseCashFlow(10000);
         game.getUser().getInventory().getCashFlow().increaseCashFlow(2000);
         ArrayList<Stock> stocks = new ArrayList<>();
@@ -134,7 +131,6 @@ class ConsoleOutputTest {
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.stockOfBeersMenu(game.getUser().getInventory());
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }

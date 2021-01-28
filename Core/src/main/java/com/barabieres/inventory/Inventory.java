@@ -1,9 +1,7 @@
 package com.barabieres.inventory;
 
-import com.barabieres.Item.Beer;
 import com.barabieres.cashflow.CashFlow;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class Inventory {
     private List<Stock> stocks;
     private int currentSize; // nombre de lignes de stock dans la liste de stock
 
-    public Inventory(Sizes size) {
+    public Inventory(InventorySizes size) {
         this.stocks = this.initStocks(size);
         this.cashFlow = new CashFlow(100.00, 1000.00);
     }
@@ -27,7 +25,7 @@ public class Inventory {
      *
      * @return
      */
-    public List<Stock> initStocks(Sizes size) {
+    public List<Stock> initStocks(InventorySizes size) {
         List<Stock> fixedStock = Arrays.asList(new Stock[size.getSize()]);
         return fixedStock;
     }
@@ -95,9 +93,9 @@ public class Inventory {
         return this.stocks.size();
     }
 
-    public void upgrade(Sizes size) {
+    public void upgrade(InventorySizes inventorySizes) {
         int indexOfStock = 0;
-        List<Stock> upgradedStock = Arrays.asList(new Stock[size.getSize()]);
+        List<Stock> upgradedStock = Arrays.asList(new Stock[inventorySizes.getSize()]);
         for (Stock stock : stocks) {
             upgradedStock.set(indexOfStock, stock);
             indexOfStock += 1;
@@ -110,7 +108,7 @@ public class Inventory {
         for (Stock stock : this.stocks) {
             nbPlaces -= stock.getQuantity();
         }*/
-        return stocks.size()-currentSize;
+        return stocks.size() - currentSize;
     }
 
     /**
@@ -119,7 +117,7 @@ public class Inventory {
     public void modifyRandomlySellingPriceOfAllBeers() {
         for (Stock stock : this.stocks) {
             if (stock != null)
-            stock.getBeer().setRandomSellingPrice();
+                stock.getBeer().setRandomSellingPrice();
         }
     }
 }

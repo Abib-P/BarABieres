@@ -1,6 +1,6 @@
 package com.barabieres.inventory;
 
-import com.barabieres.Item.Beer;
+import com.barabieres.item.Beer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,18 +15,14 @@ class InventoryTest {
 
     @BeforeEach
     void setup() {
-        inventory = new Inventory(Sizes.small);
+        inventory = new Inventory(InventorySizes.small);
         stock = new Stock(new Beer("Fruits rouges", 7, 5));
         inventory.addStock(stock);
     }
 
     @Test
     void should_create_inventory_with_empty_list_items_and_set_cashFlow() {
-
-     //   Inventory inventory = new Inventory(100);
-
         assertThat(inventory).isNotNull();
-        assertThat(inventory.getCashFlow().getValue()).isNotNull();
         assertThat(inventory.getStocks()).isNotNull();
     }
 
@@ -64,7 +60,7 @@ class InventoryTest {
 
     @Test
     void should_upgrade_size_of_inventory() {
-        inventory.upgrade(Sizes.average);
+        inventory.upgrade(InventorySizes.average);
         assertEquals(20, inventory.getSizeMaxOfInventory());
     }
 

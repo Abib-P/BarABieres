@@ -1,6 +1,6 @@
 package com.barabieres.inventory;
 
-import com.barabieres.Item.Beer;
+import com.barabieres.item.Beer;
 
 public class Stock {
 

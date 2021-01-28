@@ -1,15 +1,14 @@
 package com.barabieres.inventory;
 
-public enum Sizes {
-
+public enum InventorySizes {
     small(10),
     average(20),
     big(30),
     ;
 
-private int size;
+    private final int size;
 
-    Sizes(int size) {
+    InventorySizes(int size) {
         this.size = size;
     }
 
