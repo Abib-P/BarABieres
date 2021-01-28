@@ -299,7 +299,7 @@ public class Game {
         output.startMenu(user.getName());
         output.rules(moneyNeededToWin, maxNumberOfTurn);
         output.initialSituation(user.getInventory().getCashFlow().getValue(), user.getBar().getSize().getSize());
-        //todo generer le pool de base des bieres pour commencerla parti...
+        //todo generer le pool de base des bieres pour commencer la parti...
         while (!isGameOver() && !isWinned()) {
             playTurn();
         }
@@ -313,7 +313,7 @@ public class Game {
         for (int i = 0; i < getUser().getBar().getSize().getSize(); i++) {
             customers.add(new Customer());
         }
-        //todo faire acheter les bieres au clients (avec bonus ou malus)
+
         customers.forEach(customer -> {
                     if ((malusIsActivate && bonusIsActivate) || (!malusIsActivate && !bonusIsActivate)) {
                         user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()));
@@ -325,6 +325,8 @@ public class Game {
                 }
         );
         //todo faire acheter les bieres et les upgrades au joueur
-
+        user.getInventory().getCashFlow().increaseCashFlow(user.getBar().getGainOfTheDay());
+        //todo montrer au joueur l'argent qu'il a gagné aujourd'hui
+        user.getBar().setGainOfTheDay(0.);
     }
 }
