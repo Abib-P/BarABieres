@@ -299,22 +299,32 @@ public class Game {
         output.startMenu(user.getName());
         output.rules(moneyNeededToWin, maxNumberOfTurn);
         output.initialSituation(user.getInventory().getCashFlow().getValue(), user.getBar().getSize().getSize());
+        //todo generer le pool de base des bieres pour commencerla parti...
         while (!isGameOver() && !isWinned()) {
             playTurn();
         }
+        //todo annoncer le résultat au joueur
     }
 
     private void playTurn() {
         generateBonus();
         generateMalus();
-        //générer les clients (le nombre de client est défini par la taille du resto)
         List<Customer> customers = new ArrayList<>();
         for (int i = 0; i < getUser().getBar().getSize().getSize(); i++) {
             customers.add(new Customer());
         }
-        //faire acheter les bieres au clients (avec bonus ou malus)
-        customers.forEach(customer -> customer.chooseBeersToBuy(user.getInventory().getStocks())); //TODO wtf???
-        //faire acheter les bieres et les upgrades au joueur
+        //todo faire acheter les bieres au clients (avec bonus ou malus)
+        customers.forEach(customer -> {
+                    if ((malusIsActivate && bonusIsActivate) || (!malusIsActivate && !bonusIsActivate)) {
+                        user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()));
+                    } else if (bonusIsActivate) {
+                        user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()) * 2);
+                    } else {
+                        user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()) / 2);
+                    }
+                }
+        );
+        //todo faire acheter les bieres et les upgrades au joueur
 
     }
 }
