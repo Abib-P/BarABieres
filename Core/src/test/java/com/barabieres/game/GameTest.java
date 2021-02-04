@@ -2,6 +2,8 @@ package com.barabieres.game;
 
 import com.barabieres.bar.BarSizes;
 import com.barabieres.inventory.InventorySizes;
+import com.barabieres.inventory.Stock;
+import com.barabieres.item.Beer;
 import com.barabieres.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,26 +67,30 @@ class GameTest {
 
     @Test
     public void should_success_buy_beer() {
+        game.getUser().getInventory().addStock(new Stock(new Beer("Simon", 2, 2), 2));
         game.getUser().getInventory().increaseStock(0, 20);
         assertTrue(game.buyBeer(0, 10));
     }
 
     @Test
     public void should_success_buy_beer_but_not_all_quantity() {
+        game.getUser().getInventory().addStock(new Stock(new Beer("Simon", 0, 2), 2));
         game.getUser().getInventory().increaseStock(0, 8);
-        assertTrue(game.buyBeer(0, 20));
+        assertTrue(game.buyBeer(0, 200));
     }
 
     @Test
     public void should_not_success_buy_beer_because_dont_have_space() {
-        game.getUser().getInventory().increaseStock(0, 100);
+        game.getUser().getInventory().addStock(new Stock(new Beer("Simon", 22222, 2), 2));
+        game.getUser().getInventory().increaseStock(0, 1000);
         assertFalse(game.buyBeer(0, 10));
     }
 
     @Test
     public void should_not_success_buy_beer_because_dont_have_tresorery() {
+        game.getUser().getInventory().addStock(new Stock(new Beer("Simon", 22, 2), 2));
         game.getUser().getInventory().increaseStock(0, 10);
-        //game.getUser().getInventory().getCashFlow().decreaseCashFlow(2000);
+        game.getUser().getInventory().getCashFlow().decreaseCashFlow(2000);
         assertFalse(game.buyBeer(0, 10));
     }
 }

@@ -2,6 +2,7 @@ package com.barabieres.inventory;
 
 import com.barabieres.cashflow.CashFlow;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Inventory {
     private InventorySizes currentSize; // nombre de lignes de stock dans la liste de stock
 
     public Inventory(InventorySizes size) {
-        this.stocks = this.initStocks(size);
+        this.stocks = new ArrayList<>();
         this.currentSize = size;
         this.cashFlow = new CashFlow(100.00, 1000.00);
     }
@@ -20,16 +21,6 @@ public class Inventory {
     public Inventory(List<Stock> stocks) {
         this.stocks = stocks;
         this.cashFlow = new CashFlow(100.00, 1000.00);
-    }
-
-    /**
-     * fonction permettant d'initialiser les stocks à 0 pour chaque type de bière
-     *
-     * @return
-     */
-    public List<Stock> initStocks(InventorySizes size) {
-        List<Stock> fixedStock = Arrays.asList(new Stock[size.getSize()]);
-        return fixedStock;
     }
 
     public CashFlow getCashFlow() {
@@ -97,12 +88,26 @@ public class Inventory {
 
     public void upgrade(InventorySizes inventorySizes) {
         int indexOfStock = 0;
+        currentSize = inventorySizes;
         List<Stock> upgradedStock = Arrays.asList(new Stock[inventorySizes.getSize()]);
         for (Stock stock : stocks) {
             upgradedStock.set(indexOfStock, stock);
             indexOfStock += 1;
         }
         this.stocks = upgradedStock;
+    }
+
+
+    public boolean upgradeInventorySize() {
+        if (currentSize == InventorySizes.small) {
+            currentSize = InventorySizes.average;
+            return true;
+        } else if (currentSize == InventorySizes.average) {
+            currentSize = InventorySizes.big;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getNumberOfPlacesLeftInTheInventory() {

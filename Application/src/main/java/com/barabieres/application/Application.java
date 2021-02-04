@@ -24,4 +24,12 @@ public class Application {
         game.playGame();
         return EXIT_SUCCESS;
     }
+
+    public static int runProgram(Game game) {
+        Output consoleOutput = new ConsoleOutput();
+        Input consoleInput = new ConsoleInput();
+        BeerRepository beerRepository = new JsonBeerRepository("BeerRepositoryJson/src/main/resources/beers.json");
+        Game gaming = game;
+        return EXIT_SUCCESS;
+    }
 }

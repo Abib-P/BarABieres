@@ -14,15 +14,7 @@ public class ConsoleOutput implements Output {
 
     @Override
     public void startMenu(String userName) {
-        // Affiche le debut
         System.out.println("Welcome " + userName + " to BaràBieres !");
-        // Affiche la liste des choix possibles
-        //FIXME implémenter difficulter
-        /*
-        for (startChoices choice : startChoices.values()){
-            index += 1;
-            System.out.println(index + ": " + choice);
-        }*/
     }
 
     @Override
@@ -120,11 +112,9 @@ public class ConsoleOutput implements Output {
      * @param inventory récupère l'inventaire qui contient toutes les bières qui achetables dans la partie
      */
     public void buyablesBeersMenu(Inventory inventory) {
-        // Affiche le début
         String introduction = "Select the beer you want to buy :";
         System.out.println(introduction);
         int i = 1;
-        // Affiche la liste des bières possibles
         for(Stock stock : inventory.getStocks()) {
             System.out.println(i + ": " + stock.getBeer().getName() + ", " + stock.getBeer().getValue());
             i += 1;

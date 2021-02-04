@@ -59,15 +59,28 @@ class InventoryTest {
     }
 
     @Test
-    void should_upgrade_size_of_inventory() {
+    void should_upgrade_size_of_inventory_up_to_average() {
         inventory.upgrade(InventorySizes.average);
-        assertEquals(20, inventory.getSizeMaxOfInventory());
+        assertEquals(200, inventory.getSizeMaxOfInventory());
+    }
+
+    @Test
+    void should_upgrade_size_of_inventory_up_to_big() {
+        inventory.upgrade(InventorySizes.big);
+        assertEquals(300, inventory.getSizeMaxOfInventory());
+    }
+
+    @Test
+    void should_not_upgrade_when_size_is_already_big() {
+        inventory.upgrade(InventorySizes.big);
+        assertEquals(300, inventory.getSizeMaxOfInventory());
+        assertEquals(false, inventory.upgradeInventorySize());
     }
 
     @Test
     void should_get_number_of_places_in_the_inventory() {
         inventory.addStock(stock);
-        assertEquals(8, inventory.getNumberOfPlacesLeftInTheInventory());
+        assertEquals(100, inventory.getNumberOfPlacesLeftInTheInventory());
     }
 
     @Test
