@@ -3,7 +3,7 @@
 Projet de jeu de simulation de bar à bières en console, développé en Java\
 ####Démonstration 
 
-##Présentation de l'équipe
+##Présentation du fonctionnement d'équipe
 Aloïs Zimmermann--Rosenthal\
 Ichaï Chtitski \
 Paul Abib \
