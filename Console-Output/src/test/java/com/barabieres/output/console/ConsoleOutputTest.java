@@ -2,6 +2,7 @@ package com.barabieres.output.console;
 
 import com.barabieres.bar.BarSizes;
 import com.barabieres.game.Game;
+import com.barabieres.input.Input;
 import com.barabieres.inventory.InventorySizes;
 import com.barabieres.inventory.Stock;
 import com.barabieres.item.Beer;
@@ -77,7 +78,8 @@ class ConsoleOutputTest {
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.choicesMenu();
+        Input input = new ConsoleInput();
+        consoleOutput.choicesMenu(input);
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }

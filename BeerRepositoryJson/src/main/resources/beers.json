@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Beck's Light",
+    "abv": 2.30,
+    "price": 10.0
+  },
+  {
+    "name": "Strauss Endless Summer Light",
+    "abv": 3.30,
+    "price": 9.0
+  },
+  {
+    "name": "Corona Extra",
+    "abv": 4.60,
+    "price": 8.0
+  },
+  {
+    "name": "Blue Moon",
+    "abv": 5.40,
+    "price": 7.0
+  },
+  {
+    "name": "Rogue Dead Guy Ale",
+    "abv": 6.80,
+    "price": 7.0
+  },
+  {
+    "name": "Flying Dog Snake Dog Ipa",
+    "abv": 7.10,
+    "price": 8.0
+  },
+  {
+    "name": "Redhook Big Ballard Imperial Ipa",
+    "abv": 8.60,
+    "price": 9.0
+  },
+  {
+    "name": "Sam Adams Imperial Double Bock",
+    "abv": 9.50,
+    "price": 10.0
+  }
+]

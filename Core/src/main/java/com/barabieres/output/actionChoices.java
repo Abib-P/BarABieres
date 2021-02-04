@@ -2,7 +2,7 @@ package com.barabieres.output;
 
 public enum actionChoices {
     buy("Buy beers"),
-    sellPrices("Modify selling prices"),
+    //sellPrices("Modify selling prices"),
     hard("Show Inventory"),
     display("Start Selling"),
     give_up("Give up");

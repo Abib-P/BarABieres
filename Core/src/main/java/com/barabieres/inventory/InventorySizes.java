@@ -1,9 +1,9 @@
 package com.barabieres.inventory;
 
 public enum InventorySizes {
-    small(10),
-    average(20),
-    big(30),
+    small(100),
+    average(200),
+    big(300),
     ;
 
     private final int size;

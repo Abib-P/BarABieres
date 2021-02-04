@@ -2,6 +2,8 @@ package com.barabieres.application;
 
 import com.barabieres.game.Game;
 import com.barabieres.input.Input;
+import com.barabieres.item.BeerRepository;
+import com.barabieres.item.JsonBeerRepository;
 import com.barabieres.output.Output;
 import com.barabieres.output.console.ConsoleInput;
 import com.barabieres.output.console.ConsoleOutput;
@@ -17,7 +19,8 @@ public class Application {
     public static int runProgram() {
         Output consoleOutput = new ConsoleOutput();
         Input consoleInput = new ConsoleInput();
-        Game game = new Game(consoleOutput, consoleInput);
+        BeerRepository beerRepository = new JsonBeerRepository("BeerRepositoryJson/src/main/resources/beers.json");
+        Game game = new Game(consoleOutput, consoleInput, beerRepository);
         game.playGame();
         return EXIT_SUCCESS;
     }

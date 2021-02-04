@@ -7,14 +7,14 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Customer {
-    private final double moneyToSpend;
+    private double moneyToSpend;
     private final double alcoholByVolumeLiked;
     private final double alcoholAcceptance;
 
     public Customer() {
         moneyToSpend = generateMoneyToSpend();
         alcoholByVolumeLiked = generateAlcoholByVolumeLiked();
-        alcoholAcceptance = 10;
+        alcoholAcceptance = 2;
     }
 
     Customer(double moneyToSpend, double alcoholByVolumeLiked, double alcoholAcceptance) {
@@ -25,12 +25,12 @@ public class Customer {
 
     private double generateAlcoholByVolumeLiked() {
         Random r = new Random();
-        return 60 * r.nextDouble();
+        return (8 * r.nextDouble()) + 2;
     }
 
     private double generateMoneyToSpend() {
         Random r = new Random();
-        return 5 + (40 - 5) * r.nextDouble();
+        return 7 + (25 - 7) * r.nextDouble();
     }
 
     public double chooseBeersToBuy(List<Stock> beers) {
@@ -42,7 +42,9 @@ public class Customer {
             String beerChosenName = beersCustomerCanBuy.get(customerChoice).getBeer().getName();
             for (Stock beer : beers) {
                 if (beer.getBeer().getName().equals(beerChosenName)) {
-                    moneySpent += beer.getBeer().getSellingPrice();
+                    double moneySpendForTheBeer = beer.getBeer().generateSellingPrice();
+                    moneySpent += moneySpendForTheBeer;
+                    moneyToSpend -= moneySpendForTheBeer;
                     beer.decreaseQuantity(1);
                     break;
                 }

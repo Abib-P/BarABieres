@@ -67,7 +67,7 @@ class InventoryTest {
     @Test
     void should_get_number_of_places_in_the_inventory() {
         inventory.addStock(stock);
-        assertEquals(8, inventory.getNumberOfPlacesInTheInventory());
+        assertEquals(8, inventory.getNumberOfPlacesLeftInTheInventory());
     }
 
     @Test

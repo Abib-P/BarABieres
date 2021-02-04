@@ -2,11 +2,15 @@ package com.barabieres.game;
 
 import com.barabieres.customer.Customer;
 import com.barabieres.input.Input;
+import com.barabieres.inventory.Stock;
+import com.barabieres.item.BeerRepository;
 import com.barabieres.output.Output;
+import com.barabieres.output.actionChoices;
 import com.barabieres.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
 
@@ -19,6 +23,7 @@ public class Game {
     private boolean malusIsActivate;
     private Output output;
     private Input input;
+    private BeerRepository beerRepository;
 
     public Game(Double moneyNeededToWin, int maxNumberOfTurn, User user) {
         this.moneyNeededToWin = moneyNeededToWin;
@@ -30,7 +35,7 @@ public class Game {
         this.malusIsActivate = false;
     }
 
-    public Game(Output output, Input input) {
+    public Game(Output output, Input input, BeerRepository beerRepository) {
         this.moneyNeededToWin = 50000.0;
         this.maxNumberOfTurn = 50;
         this.score = 0;
@@ -40,6 +45,7 @@ public class Game {
         user = new User(output, input);
         this.output = output;
         this.input = input;
+        this.beerRepository = beerRepository;
     }
 
     public int getScore() {
@@ -171,7 +177,7 @@ public class Game {
      * @return
      */
     public boolean stillHaveEnoughtSpaceInTheInventory(int quantity) {
-        return this.user.getInventory().getNumberOfPlacesInTheInventory() - quantity >= 0;
+        return this.user.getInventory().getNumberOfPlacesLeftInTheInventory() - quantity >= 0;
     }
 
     /**
@@ -193,7 +199,7 @@ public class Game {
      * @return
      */
     public boolean stillHaveSpaceInTheInventory() {
-        return this.user.getInventory().getNumberOfPlacesInTheInventory() > 0;
+        return this.user.getInventory().getNumberOfPlacesLeftInTheInventory() > 0;
     }
 
     /**
@@ -238,7 +244,7 @@ public class Game {
     public int getMaxQuantityBuyable(int indexOfBeer, int quantity) {
         int maxQuantityBuyable = 0;
         double tresorery = this.user.getInventory().getCashFlow().getValue();
-        int nbPlaces = this.user.getInventory().getNumberOfPlacesInTheInventory();
+        int nbPlaces = this.user.getInventory().getNumberOfPlacesLeftInTheInventory();
         // tant qu'il reste de la place en inventaire et assez d'argent pour acheter une
         // bière et que la quantité souhaitée n'est pas atteinte
         while (tresorery > this.user.getInventory().getStocks().get(indexOfBeer).getBeer().getValue() &&
@@ -299,21 +305,41 @@ public class Game {
         output.startMenu(user.getName());
         output.rules(moneyNeededToWin, maxNumberOfTurn);
         output.initialSituation(user.getInventory().getCashFlow().getValue(), user.getBar().getSize().getSize());
-        //todo generer le pool de base des bieres pour commencer la parti...
+        user.getInventory().setStocks(beerRepository.getAllBeers().stream().map(Stock::new).collect(Collectors.toList()));
         while (!isGameOver() && !isWinned()) {
+
             playTurn();
         }
-        //todo annoncer le résultat au joueur
+        if (isWinned()) {
+
+        } else {
+
+        }
     }
 
     private void playTurn() {
         generateBonus();
         generateMalus();
+        output.startTurn(turn);
+        actionChoices playerChoice = output.choicesMenu(input);
+
+        System.out.println(playerChoice);
+
+        while (playerChoice != actionChoices.display && playerChoice != actionChoices.give_up) {
+            if (playerChoice == actionChoices.hard)
+                output.showBeerInventory(user.getInventory().getStocks());
+            if (playerChoice == actionChoices.buy)
+                output.buyBeer(user.getInventory().getStocks(), input, user);
+            playerChoice = output.choicesMenu(input);
+        }
+
+        if (playerChoice == actionChoices.give_up)
+            turn = maxNumberOfTurn;
+
         List<Customer> customers = new ArrayList<>();
         for (int i = 0; i < getUser().getBar().getSize().getSize(); i++) {
             customers.add(new Customer());
         }
-
         customers.forEach(customer -> {
                     if ((malusIsActivate && bonusIsActivate) || (!malusIsActivate && !bonusIsActivate)) {
                         user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()));
@@ -324,9 +350,10 @@ public class Game {
                     }
                 }
         );
-        //todo faire acheter les bieres et les upgrades au joueur
+
         user.getInventory().getCashFlow().increaseCashFlow(user.getBar().getGainOfTheDay());
-        //todo montrer au joueur l'argent qu'il a gagné aujourd'hui
+        output.showMoneyGained(user.getBar().getGainOfTheDay());
         user.getBar().setGainOfTheDay(0.);
+        nextTurn();
     }
 }

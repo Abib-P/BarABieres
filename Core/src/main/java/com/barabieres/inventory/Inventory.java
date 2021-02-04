@@ -9,15 +9,17 @@ public class Inventory {
 
     private CashFlow cashFlow;
     private List<Stock> stocks;
-    private int currentSize; // nombre de lignes de stock dans la liste de stock
+    private InventorySizes currentSize; // nombre de lignes de stock dans la liste de stock
 
     public Inventory(InventorySizes size) {
         this.stocks = this.initStocks(size);
+        this.currentSize = size;
         this.cashFlow = new CashFlow(100.00, 1000.00);
     }
 
     public Inventory(List<Stock> stocks) {
         this.stocks = stocks;
+        this.cashFlow = new CashFlow(100.00, 1000.00);
     }
 
     /**
@@ -42,12 +44,12 @@ public class Inventory {
         this.stocks = stocks;
     }
 
-    public void addStock(Stock stock) {
+    /*public void addStock(Stock stock) {
         if (currentSize != stocks.size()) {
             this.stocks.set(currentSize, stock);
             currentSize += 1;
         }
-    }
+    }*/
 
     public List<Stock> getStocks() {
         return this.stocks;
@@ -103,12 +105,12 @@ public class Inventory {
         this.stocks = upgradedStock;
     }
 
-    public int getNumberOfPlacesInTheInventory() {
-  /*      int nbPlaces = stocks.size();
+    public int getNumberOfPlacesLeftInTheInventory() {
+        int placeAlreadyUsed = 0;
         for (Stock stock : this.stocks) {
-            nbPlaces -= stock.getQuantity();
-        }*/
-        return stocks.size() - currentSize;
+            placeAlreadyUsed += stock.getQuantity();
+        }
+        return currentSize.getSize() - placeAlreadyUsed;
     }
 
     /**
@@ -119,5 +121,9 @@ public class Inventory {
             if (stock != null)
                 stock.getBeer().setRandomSellingPrice();
         }
+    }
+
+    public void addStock(Stock stock) {
+        stocks.add(stock);
     }
 }
