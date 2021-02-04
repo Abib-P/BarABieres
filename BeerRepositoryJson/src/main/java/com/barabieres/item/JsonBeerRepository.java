@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -26,16 +25,11 @@ public class JsonBeerRepository implements BeerRepository {
         List<Beer> allBeers = null;
 
         try (FileReader reader = new FileReader(path)) {
-            //Read JSON file
             Object obj = jsonParser.parse(reader);
             JSONArray beers = (JSONArray) obj;
 
             allBeers = (List<Beer>) beers.stream().map(beer -> parseBeer((JSONObject) beer)).collect(toList());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
         return allBeers;

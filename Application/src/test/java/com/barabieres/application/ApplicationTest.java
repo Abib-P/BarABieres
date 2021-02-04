@@ -17,5 +17,4 @@ class ApplicationTest {
         assertThat(response).isEqualTo(EXIT_SUCCESS);
     }
 
-
 }
