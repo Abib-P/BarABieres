@@ -73,7 +73,7 @@ public class ConsoleOutput implements Output {
 
     @Override
     public void showBeerInventory(List<Stock> stocks) {
-        stocks.forEach(stock -> System.out.println("Beer : " + stock.getBeer().getName() + " / selling price : " + stock.getBeer().getSellingPrice() + " / quantity : " + stock.getQuantity()));
+        stocks.forEach(stock -> System.out.println("Beer : " + stock.getBeer().getName() + " | selling price : " + stock.getBeer().getSellingPrice() + " | quantity : " + stock.getQuantity()));
     }
 
     @Override
