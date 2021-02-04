@@ -27,4 +27,11 @@ public class CashFlowTest {
         cashFlow.decreaseCashFlow(100);
         assertEquals(900, cashFlow.getValue());
     }
+
+    @Test
+    void should_have_zero_has_cashflow_if_it_is_suppose_to_be_negative() {
+        System.out.println(cashFlow.getValue());
+        cashFlow.decreaseCashFlow(100000);
+        assertEquals(0, cashFlow.getValue());
+    }
 }

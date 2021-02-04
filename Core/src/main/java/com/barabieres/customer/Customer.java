@@ -23,6 +23,10 @@ public class Customer {
         this.alcoholAcceptance = alcoholAcceptance;
     }
 
+    public double getMoneyToSpend() {
+        return moneyToSpend;
+    }
+
     private double generateAlcoholByVolumeLiked() {
         Random r = new Random();
         return (8 * r.nextDouble()) + 2;
