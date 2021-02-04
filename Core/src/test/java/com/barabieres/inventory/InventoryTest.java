@@ -1,6 +1,6 @@
 package com.barabieres.inventory;
 
-import com.barabieres.Item.Beer;
+import com.barabieres.item.Beer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,18 +15,14 @@ class InventoryTest {
 
     @BeforeEach
     void setup() {
-        inventory = new Inventory(Sizes.small);
+        inventory = new Inventory(InventorySizes.small);
         stock = new Stock(new Beer("Fruits rouges", 7, 5));
         inventory.addStock(stock);
     }
 
     @Test
     void should_create_inventory_with_empty_list_items_and_set_cashFlow() {
-
-     //   Inventory inventory = new Inventory(100);
-
         assertThat(inventory).isNotNull();
-        assertThat(inventory.getCashFlow().getValue()).isNotNull();
         assertThat(inventory.getStocks()).isNotNull();
     }
 
@@ -63,15 +59,28 @@ class InventoryTest {
     }
 
     @Test
-    void should_upgrade_size_of_inventory() {
-        inventory.upgrade(Sizes.average);
-        assertEquals(20, inventory.getSizeMaxOfInventory());
+    void should_upgrade_size_of_inventory_up_to_average() {
+        inventory.upgrade(InventorySizes.average);
+        assertEquals(200, inventory.getSizeMaxOfInventory());
+    }
+
+    @Test
+    void should_upgrade_size_of_inventory_up_to_big() {
+        inventory.upgrade(InventorySizes.big);
+        assertEquals(300, inventory.getSizeMaxOfInventory());
+    }
+
+    @Test
+    void should_not_upgrade_when_size_is_already_big() {
+        inventory.upgrade(InventorySizes.big);
+        assertEquals(300, inventory.getSizeMaxOfInventory());
+        assertEquals(false, inventory.upgradeInventorySize());
     }
 
     @Test
     void should_get_number_of_places_in_the_inventory() {
         inventory.addStock(stock);
-        assertEquals(8, inventory.getNumberOfPlacesInTheInventory());
+        assertEquals(100, inventory.getNumberOfPlacesLeftInTheInventory());
     }
 
     @Test

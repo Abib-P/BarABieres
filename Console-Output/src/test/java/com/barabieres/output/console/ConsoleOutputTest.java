@@ -1,10 +1,11 @@
 package com.barabieres.output.console;
 
-import com.barabieres.Item.Beer;
+import com.barabieres.bar.BarSizes;
 import com.barabieres.game.Game;
-import com.barabieres.inventory.Inventory;
-import com.barabieres.inventory.Sizes;
+import com.barabieres.input.Input;
+import com.barabieres.inventory.InventorySizes;
 import com.barabieres.inventory.Stock;
+import com.barabieres.item.Beer;
 import com.barabieres.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConsoleOutputTest {
+
+    @BeforeEach
+    void setup() {
+
+    }
 
     @Test
     public void should_display_rules() {
@@ -27,37 +31,27 @@ class ConsoleOutputTest {
         // After this all System.out.println() statements will come to outContent stream.
 
         String expectedOutput = """
-                This is a beer selling management game.
-                 You need to have 50000 euros at 50To win the game.
-                 The faster you are, the better your final score will be\r
+                This is a beer selling management game.\r
+                You need to have 50000.0 euros before the 50th turn to win the game.\r
+                The faster you are, the better your final score will be. Good luck !\r
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.rules(50000, 50);
+        consoleOutput.rules(50000.0, 50);
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }
-    
+
     @Test
     public void should_display_start_menu() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-
-        // After this all System.out.println() statements will come to outContent stream.
-
-        //Now you have to validate the output. Let's say items had 1 element.
-        // With name as FirstElement and number as 1.
         String expectedOutput = """
-                Welcome to BaràBieres ! Enter a number :\r
-                1: Easy mode\r
-                2: Normal mode\r
-                3: Hard mode\r
-                4: Display Rules\r
+                Welcome Théo to BaràBieres !\r         
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.startMenu();
-        // Do the actual assertion.
+        consoleOutput.startMenu("Théo");
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -66,28 +60,34 @@ class ConsoleOutputTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        // After this all System.out.println() statements will come to outContent stream.
-
-        //Now you have to validate the output. Let's say items had 1 element.
-        // With name as FirstElement and number as 1.
         String expectedOutput = """
                 Select your action :\r
                 1: Buy beers\r
-                2: Modify selling prices\r
-                3: Show Inventory\r
-                4: Start Selling\r
-                5: Give up\r
+                2: Show Inventory\r
+                3: Start Selling\r
+                4: Give up\r
                 """;
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.choicesMenu();
-        // Do the actual assertion.
+        Input input = new ConsoleInput() {
+            @Override
+            public String getString() {
+                return "Someone";
+            }
+
+            @Override
+            public int getNumberBetween(int a, int b) {
+                return 3;
+            }
+        };
+        consoleOutput.choicesMenu(input);
+
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
     public void should_display_buyable_beers_menu() {
-        Game game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
+        Game game = new Game(300.0, 25, new User("Théo", InventorySizes.small, BarSizes.small));
         ArrayList<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
         stocks.add(new Stock(new Beer("Blonde", 5, 4)));
@@ -107,34 +107,6 @@ class ConsoleOutputTest {
 
         ConsoleOutput consoleOutput = new ConsoleOutput();
         consoleOutput.buyablesBeersMenu(game.getUser().getInventory());
-        // Do the actual assertion.
-        assertEquals(expectedOutput, outContent.toString());
-    }
-
-    @Test
-    public void should_display_stock_of_beers_menu() {
-        Game game = new Game(300, 25, new User("Théo", Sizes.small, Sizes.small));
-        game.getUser().getInventory().getCashFlow().decreaseCashFlow(10000);
-        game.getUser().getInventory().getCashFlow().increaseCashFlow(2000);
-        ArrayList<Stock> stocks = new ArrayList<>();
-        stocks.add(new Stock(new Beer("Fruits rouges", 7, 5)));
-        stocks.add(new Stock(new Beer("Blonde", 5, 4)));
-        stocks.add(new Stock(new Beer("Brune", 6, 4.5)));
-        game.getUser().getInventory().setStocks(stocks);
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
-        String expectedOutput = """
-                Tresorery : 2000.0
-                \r
-                Fruits rouges : 0\r
-                Blonde : 0\r
-                Brune : 0\r
-                """;
-
-        ConsoleOutput consoleOutput = new ConsoleOutput();
-        consoleOutput.stockOfBeersMenu(game.getUser().getInventory());
         // Do the actual assertion.
         assertEquals(expectedOutput, outContent.toString());
     }

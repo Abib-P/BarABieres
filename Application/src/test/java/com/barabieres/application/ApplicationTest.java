@@ -12,10 +12,9 @@ class ApplicationTest {
 
     @Test
     void should_run_program_return_exit_success_when_called() {
-        int response = runProgram();
+        int response = runProgram(null);
 
         assertThat(response).isEqualTo(EXIT_SUCCESS);
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.barabieres.Item;
+package com.barabieres.item;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,5 @@
 package com.barabieres.inventory;
 
-import com.barabieres.Item.Beer;
 import com.barabieres.cashflow.CashFlow;
 
 import java.util.ArrayList;
@@ -11,25 +10,17 @@ public class Inventory {
 
     private CashFlow cashFlow;
     private List<Stock> stocks;
-    private int currentSize; // nombre de lignes de stock dans la liste de stock
+    private InventorySizes currentSize; // nombre de lignes de stock dans la liste de stock
 
-    public Inventory(Sizes size) {
-        this.stocks = this.initStocks(size);
+    public Inventory(InventorySizes size) {
+        this.stocks = new ArrayList<>();
+        this.currentSize = size;
         this.cashFlow = new CashFlow(100.00, 1000.00);
     }
 
     public Inventory(List<Stock> stocks) {
         this.stocks = stocks;
-    }
-
-    /**
-     * fonction permettant d'initialiser les stocks à 0 pour chaque type de bière
-     *
-     * @return
-     */
-    public List<Stock> initStocks(Sizes size) {
-        List<Stock> fixedStock = Arrays.asList(new Stock[size.getSize()]);
-        return fixedStock;
+        this.cashFlow = new CashFlow(100.00, 1000.00);
     }
 
     public CashFlow getCashFlow() {
@@ -44,12 +35,12 @@ public class Inventory {
         this.stocks = stocks;
     }
 
-    public void addStock(Stock stock) {
+    /*public void addStock(Stock stock) {
         if (currentSize != stocks.size()) {
             this.stocks.set(currentSize, stock);
             currentSize += 1;
         }
-    }
+    }*/
 
     public List<Stock> getStocks() {
         return this.stocks;
@@ -95,9 +86,10 @@ public class Inventory {
         return this.stocks.size();
     }
 
-    public void upgrade(Sizes size) {
+    public void upgrade(InventorySizes inventorySizes) {
         int indexOfStock = 0;
-        List<Stock> upgradedStock = Arrays.asList(new Stock[size.getSize()]);
+        currentSize = inventorySizes;
+        List<Stock> upgradedStock = Arrays.asList(new Stock[inventorySizes.getSize()]);
         for (Stock stock : stocks) {
             upgradedStock.set(indexOfStock, stock);
             indexOfStock += 1;
@@ -105,12 +97,25 @@ public class Inventory {
         this.stocks = upgradedStock;
     }
 
-    public int getNumberOfPlacesInTheInventory() {
-  /*      int nbPlaces = stocks.size();
+
+    public boolean upgradeInventorySize() {
+        if (currentSize == InventorySizes.small) {
+            currentSize = InventorySizes.average;
+            return true;
+        } else if (currentSize == InventorySizes.average) {
+            currentSize = InventorySizes.big;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getNumberOfPlacesLeftInTheInventory() {
+        int placeAlreadyUsed = 0;
         for (Stock stock : this.stocks) {
-            nbPlaces -= stock.getQuantity();
-        }*/
-        return stocks.size()-currentSize;
+            placeAlreadyUsed += stock.getQuantity();
+        }
+        return currentSize.getSize() - placeAlreadyUsed;
     }
 
     /**
@@ -119,7 +124,11 @@ public class Inventory {
     public void modifyRandomlySellingPriceOfAllBeers() {
         for (Stock stock : this.stocks) {
             if (stock != null)
-            stock.getBeer().setRandomSellingPrice();
+                stock.getBeer().setRandomSellingPrice();
         }
+    }
+
+    public void addStock(Stock stock) {
+        stocks.add(stock);
     }
 }

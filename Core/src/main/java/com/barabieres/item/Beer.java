@@ -1,4 +1,4 @@
-package com.barabieres.Item;
+package com.barabieres.item;
 
 public class Beer extends Item{
 

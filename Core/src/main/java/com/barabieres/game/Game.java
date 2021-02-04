@@ -1,26 +1,51 @@
 package com.barabieres.game;
 
-import com.barabieres.bar.Bar;
+import com.barabieres.customer.Customer;
+import com.barabieres.input.Input;
+import com.barabieres.inventory.Stock;
+import com.barabieres.item.BeerRepository;
+import com.barabieres.output.Output;
+import com.barabieres.output.actionChoices;
 import com.barabieres.user.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
 
     private int score;
-    private final int winAt;
-    private final int gameOverAt;
+    private final Double moneyNeededToWin;
+    private final int maxNumberOfTurn;
     private int turn;
     private User user;
     private boolean bonusIsActivate;
     private boolean malusIsActivate;
+    private Output output;
+    private Input input;
+    private BeerRepository beerRepository;
 
-    public Game(int winAt, int gameOverAt, User user) {
-        this.winAt = winAt;
+    public Game(Double moneyNeededToWin, int maxNumberOfTurn, User user) {
+        this.moneyNeededToWin = moneyNeededToWin;
         this.score = 0;
-        this.gameOverAt = gameOverAt;
+        this.maxNumberOfTurn = maxNumberOfTurn;
         this.turn = 0;
         this.user = user;
         this.bonusIsActivate = false;
         this.malusIsActivate = false;
+    }
+
+    public Game(Output output, Input input, BeerRepository beerRepository) {
+        this.moneyNeededToWin = 50000.0;
+        this.maxNumberOfTurn = 50;
+        this.score = 0;
+        this.turn = 0;
+        this.bonusIsActivate = false;
+        this.malusIsActivate = false;
+        user = new User(output, input);
+        this.output = output;
+        this.input = input;
+        this.beerRepository = beerRepository;
     }
 
     public int getScore() {
@@ -29,18 +54,18 @@ public class Game {
 
     /**
      * Score max 10 000
-     * A chaque tour qui passe le score perd son score max divisé par son nombre de tour max (décroissance proportionnelle)
+     * A chaque tour qui pasrse le score perd son scoe max divisé par son nombre de tour max (décroissance proportionnelle)
      */
     public void setScore() {
-        this.score = 10000 - (10000 / gameOverAt) * turn;
+        this.score = 10000 - (10000 / maxNumberOfTurn) * turn;
     }
 
-    public int getWinAt() {
-        return this.winAt;
+    public Double getMoneyNeededToWin() {
+        return this.moneyNeededToWin;
     }
 
-    public int getGameOverAt() {
-        return gameOverAt;
+    public int getMaxNumberOfTurn() {
+        return maxNumberOfTurn;
     }
 
     public int getTurn() {
@@ -152,7 +177,7 @@ public class Game {
      * @return
      */
     public boolean stillHaveEnoughtSpaceInTheInventory(int quantity) {
-        return this.user.getInventory().getNumberOfPlacesInTheInventory() - quantity >= 0;
+        return this.user.getInventory().getNumberOfPlacesLeftInTheInventory() - quantity >= 0;
     }
 
     /**
@@ -174,7 +199,7 @@ public class Game {
      * @return
      */
     public boolean stillHaveSpaceInTheInventory() {
-        return this.user.getInventory().getNumberOfPlacesInTheInventory() > 0;
+        return this.user.getInventory().getNumberOfPlacesLeftInTheInventory() > 0;
     }
 
     /**
@@ -219,7 +244,7 @@ public class Game {
     public int getMaxQuantityBuyable(int indexOfBeer, int quantity) {
         int maxQuantityBuyable = 0;
         double tresorery = this.user.getInventory().getCashFlow().getValue();
-        int nbPlaces = this.user.getInventory().getNumberOfPlacesInTheInventory();
+        int nbPlaces = this.user.getInventory().getNumberOfPlacesLeftInTheInventory();
         // tant qu'il reste de la place en inventaire et assez d'argent pour acheter une
         // bière et que la quantité souhaitée n'est pas atteinte
         while (tresorery > this.user.getInventory().getStocks().get(indexOfBeer).getBeer().getValue() &&
@@ -237,7 +262,7 @@ public class Game {
      */
     public boolean isWinned() {
         boolean isWinned = true;
-        if (this.user.getInventory().getCashFlow().getValue() < this.winAt) {
+        if (this.user.getInventory().getCashFlow().getValue() < this.moneyNeededToWin) {
             isWinned = false;
         }
         return isWinned;
@@ -250,7 +275,7 @@ public class Game {
      */
     public boolean isGameOver() {
         boolean isGameOver = true;
-        if (this.turn < this.gameOverAt) {
+        if (this.turn < this.maxNumberOfTurn) {
             isGameOver = false;
         }
         return isGameOver;
@@ -263,11 +288,7 @@ public class Game {
     public void generateBonus() {
         int a = (int) Math.round(Math.random() * 100);
         int b = (int) Math.round(Math.random() * 100);
-        if (a == b) {
-            this.bonusIsActivate = true;
-        } else {
-            this.bonusIsActivate = false;
-        }
+        this.bonusIsActivate = a == b;
     }
 
     /**
@@ -277,10 +298,62 @@ public class Game {
     public void generateMalus() {
         int a = (int) Math.round(Math.random() * 100);
         int b = (int) Math.round(Math.random() * 100);
-        if (a == b) {
-            this.malusIsActivate = true;
-        } else {
-            this.malusIsActivate = false;
+        this.malusIsActivate = a == b;
+    }
+
+    public void playGame() {
+        output.startMenu(user.getName());
+        output.rules(moneyNeededToWin, maxNumberOfTurn);
+        output.initialSituation(user.getInventory().getCashFlow().getValue(), user.getBar().getSize().getSize());
+        user.getInventory().setStocks(beerRepository.getAllBeers().stream().map(Stock::new).collect(Collectors.toList()));
+        while (!isGameOver() && !isWinned()) {
+
+            playTurn();
         }
+        if (isWinned()) {
+
+        } else {
+
+        }
+    }
+
+    private void playTurn() {
+        generateBonus();
+        generateMalus();
+        output.startTurn(turn);
+        actionChoices playerChoice = output.choicesMenu(input);
+
+        System.out.println(playerChoice);
+
+        while (playerChoice != actionChoices.display && playerChoice != actionChoices.give_up) {
+            if (playerChoice == actionChoices.hard)
+                output.showBeerInventory(user.getInventory().getStocks());
+            if (playerChoice == actionChoices.buy)
+                output.buyBeer(user.getInventory().getStocks(), input, user);
+            playerChoice = output.choicesMenu(input);
+        }
+
+        if (playerChoice == actionChoices.give_up)
+            turn = maxNumberOfTurn;
+
+        List<Customer> customers = new ArrayList<>();
+        for (int i = 0; i < getUser().getBar().getSize().getSize(); i++) {
+            customers.add(new Customer());
+        }
+        customers.forEach(customer -> {
+                    if ((malusIsActivate && bonusIsActivate) || (!malusIsActivate && !bonusIsActivate)) {
+                        user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()));
+                    } else if (bonusIsActivate) {
+                        user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()) * 2);
+                    } else {
+                        user.getBar().increaseGainOfTheDay(customer.chooseBeersToBuy(user.getInventory().getStocks()) / 2);
+                    }
+                }
+        );
+
+        user.getInventory().getCashFlow().increaseCashFlow(user.getBar().getGainOfTheDay());
+        output.showMoneyGained(user.getBar().getGainOfTheDay());
+        user.getBar().setGainOfTheDay(0.);
+        nextTurn();
     }
 }

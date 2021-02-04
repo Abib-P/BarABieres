@@ -31,7 +31,7 @@ public class CashFlow {
      * @param quantity
      */
     public void increaseCashFlow(double quantity) {
-        this.value = this.value + quantity;
+        this.value += quantity;
     }
 
     /**
@@ -40,7 +40,7 @@ public class CashFlow {
      * @param quantity
      */
     public void decreaseCashFlow(double quantity) {
-        this.value = this.value - quantity;
+        this.value -= quantity;
         if(this.value < 0) {
             value = 0;
         }

@@ -14,7 +14,7 @@
         <module>Cucumber</module>
         <module>Console-Input</module>
         <module>Console-Output</module>
-        <module>Database</module>
+        <module>BeerRepositoryJson</module>
     </modules>
     <dependencies>
         <dependency>
